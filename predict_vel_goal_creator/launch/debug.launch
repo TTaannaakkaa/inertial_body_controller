@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+
+<launch>
+    <arg name="rviz_settings" default="$(find predict_vel_goal_creator)/config/rviz/predict_vel_goal_creator.rviz"/>
+    <arg name="predict_vel_goal_creator_settings" default="$(find predict_vel_goal_creator)/config/param/predict_vel_goal_creator.yaml"/>
+    <arg name="second_challenge_path" default="$(env HOME)/catkin_ws/src/second_challenge_new"/>
+
+    <include file="$(arg second_challenge_path)/global_path_planner/launch/global_path_planner.launch"/>
+    <include file="$(arg second_challenge_path)/localizer/launch/localizer.launch"/>
+
+    <node pkg="predict_vel_goal_creator" type="predict_vel_goal_creator_node" name="predict_vel_goal_creator" output="screen">
+        <rosparam command="load" file="$(arg predict_vel_goal_creator_settings)"/>
+    </node>
+    
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(arg rviz_settings)"/>
+
+    <node pkg="rosbag" type="play" name="rosbag" args="$(env HOME)/bagfiles/final_judgement.bag"/>
+</launch>

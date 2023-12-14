@@ -3,8 +3,8 @@
 int main(int argc, char* argv[])
 {
     ros::init(argc, argv, "predict_vel_goal_creator");
-    LocalGoalCreator localgoalcreator;
-    localgoalcreator.process();
+    PredictVelPlanner rredictvelplanner;
+    rredictvelplanner.process();
 
     return 0;
 }
