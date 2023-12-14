@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<launch>
+    <arg name="predict_vel_goal_creator_settings" default="$(find predict_vel_goal_creator)/config/param/predict_vel_goal_creator.yaml"/>
+
+    <node pkg="predict_vel_goal_creator" type="predict_vel_goal_creator_node" name="predict_vel_goal_creator" output="screen">
+        <rosparam command="load" file="$(arg predict_vel_goal_creator_settings)"/>
+    </node>
+</launch>
