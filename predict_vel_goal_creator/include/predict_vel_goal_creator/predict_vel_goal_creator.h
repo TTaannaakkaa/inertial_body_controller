@@ -22,8 +22,10 @@ private:
 
     int hz_;
     int index_step_;
-    int goal_index_;
-    double taeget_distance_;
+    int cur_goal_index_;
+    int pre_goal_index_;
+    double cur_taeget_distance_;
+    double pre_taeget_distance_;
     bool is_path_ = false;
 
     ros::NodeHandle nh_;
