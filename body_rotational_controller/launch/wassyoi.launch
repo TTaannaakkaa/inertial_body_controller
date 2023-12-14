@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<launch>
+    <arg name="node_path" default="$(env HOME)/catkin_ws/src/second_challenge_new"/>
+
+    <include file="$(env HOME)/catkin_ws/src/planner/sin/launch/sin.launch"/>
+    <!-- <include file="$(arg node_path)/localizer/launch/localizer.launch"/> -->
+    <include file="$(arg node_path)/local_goal_creator/launch/local_goal_creator.launch">
+      <remap from="/estimated_pose" to="/sq2_ccv/diff_drive_steering_controller/odom"/>
+    </include>
+    <include file="$(arg node_path)/local_map_creator/launch/local_map_creator.launch"/>
+    <include file="$(arg node_path)/local_path_planner/launch/local_path_planner.launch">
+      <remap from="roomba/command" to="/sq2_ccv/diff_drive_steering_controller/cmd_vel"/>
+    </include>
+    <include file="$(find ccv_sim)/launch/ccv_sim.launch"/> 
+
+    <!-- <arg name="setting_file" default="$(find body_rotational_controller)/config/param/body_rotational_controller.yaml"/>
+    <node name="ccv_bady_rotational_controller" pkg="body_rotational_controller" type="body_rotational_controller_node" output="screen">
+        <rosparam command="load" file="$(arg setting_file)"/>
+        <remap from="/odom" to="/sq2_ccv/diff_drive_steering_controller/odom"/>
+        <remap from="/roll_pitch" to="/sq2_ccv/roll_pitch_controller/roll_pitch"/>
+    </node> -->
+    
+    <!-- <node pkg="rviz" type="rviz" name="rviz" args="-d $(arg rviz_settings)"/> -->
+
+    <!-- <node pkg="rosbag" type="play" name="rosbag" args="$(env HOME)/bagfiles/final_judgement.bag"/> -->
+</launch>
