@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<launch>
+    <arg name="rviz_settings" default="$(find inertial_body_controller_launch)/config/rviz/inertial_body_controller_launch.rviz"/>
+    <arg name="work_space" default="$(env HOME)/catkin_ws/src"/>
+
+    <include file="$(arg work_space)/planner/sin/launch/sin.launch"/>
+    <!-- <include file="$(arg work_space)/second_challenge_second/obstacle_detector/launch/obstacle_detector.launch"/> -->
+    <!-- <include file="$(find predict_vel_goal_creator)/launch/predict_vel_goal_creator.launch"/> -->
+    <!-- <include file="$(find predict_vel_planner)/launch/predict_vel_planner.launch"/> -->
+    <!-- <include file="$(find body_controller)/launch/body_controller.launch"/> -->
+
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(arg rviz_settings)"/>
+
+</launch>

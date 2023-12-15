@@ -21,16 +21,32 @@ DWAPlanner::DWAPlanner():private_nh_("~")
     private_nh_.getParam("radius_margin", radius_margin_);
     private_nh_.getParam("search_range", search_range_);
 
-    local_goal_sub_ = nh_.subscribe("/local_goal", 1, &DWAPlanner::local_goal_callback, this);
+    ROS_INFO_STREAM("hz: " << hz_);
+    ROS_INFO_STREAM("dt: " << dt_);
+    ROS_INFO_STREAM("goal_tolerance: " << goal_tolerance_);
+    ROS_INFO_STREAM("max_vel: " << max_vel_);
+    ROS_INFO_STREAM("min_vel: " << min_vel_);
+    ROS_INFO_STREAM("max_yawrate: " << max_yawrate_);
+    ROS_INFO_STREAM("min_yawrate: " << min_yawrate_);
+    ROS_INFO_STREAM("max_accel: " << max_accel_);
+    ROS_INFO_STREAM("max_dyawrate: " << max_dyawrate_);
+    ROS_INFO_STREAM("v_reso: " << v_reso_);
+    ROS_INFO_STREAM("y_reso: " << y_reso_);
+    ROS_INFO_STREAM("predict_time: " << predict_time_);
+    ROS_INFO_STREAM("heading_cost_gain: " << heading_cost_gain_);
+    ROS_INFO_STREAM("velocity_cost_gain: " << velocity_cost_gain_);
+    ROS_INFO_STREAM("distance_cost_gain: " << distance_cost_gain_);
+    ROS_INFO_STREAM("robot_radius: " << robot_radius_);
+    ROS_INFO_STREAM("radius_margin: " << radius_margin_);
+    ROS_INFO_STREAM("search_range: " << search_range_);
+
+
+    local_goal_sub_ = nh_.subscribe("/cur_local_goal", 1, &DWAPlanner::local_goal_callback, this);
     obs_pose_sub_ = nh_.subscribe("/obstacle_pose", 1, &DWAPlanner::obs_pose_callback, this);
 
-    cur_cmd_vel_pub_ = nh_.advertise<geometry_msgs::Twist>("/cur_cmd_vel", 1);
-    cur_predict_path_pub_ = nh_.advertise<nav_msgs::Path>("/cur_predict_path", 1);
-    cur_optimal_path_pub_ = nh_.advertise<nav_msgs::Path>("/cur_optimal_path", 1);
-
-    pre_cmd_vel_pub_ = nh_.advertise<geometry_msgs::Twist>("/pre_cmd_vel", 1);
-    pre_predict_path_pub_ = nh_.advertise<nav_msgs::Path>("/pre_predict_path", 1);
-    pre_optimal_path_pub_ = nh_.advertise<nav_msgs::Path>("/pre_optimal_path", 1);
+    cmd_speed_pub_ = nh_.advertise<roomba_500driver_meiji::RoombaCtrl>("/roomba/control", 1);
+    predict_path_pub_ = nh_.advertise<nav_msgs::Path>("/predict_path", 1);
+    optimal_path_pub_ = nh_.advertise<nav_msgs::Path>("/optimal_path", 1);
 }
 
 void DWAPlanner::local_goal_callback(const geometry_msgs::PointStamped::ConstPtr& msg)
@@ -92,6 +108,7 @@ void DWAPlanner::process()
         }
         else
         {
+            ROS_INFO_STREAM("hogehoge");
             roomba_ctl(0.0, 0.0);
         }
 
@@ -122,8 +139,6 @@ std::vector<double> DWAPlanner::calc_input()
     {
         for(double yawrate=dw_.min_yawrate; yawrate<=dw_.max_yawrate; yawrate+=y_reso_)
         {
-            ROS_WARN_STREAM("max_yawrate: " << dw_.max_yawrate);
-            ROS_WARN_STREAM("yawrate: " << yawrate);
             const std::vector<State> trajectory = calc_trajectory(velocity, yawrate);
             double score = calc_eval(trajectory);
             trajectory_list.push_back(trajectory);
@@ -160,7 +175,7 @@ std::vector<double> DWAPlanner::calc_input()
 
 void DWAPlanner::calc_dynamic_window()
 {
-    ROS_WARN_STREAM("calc_dynamic_window");
+    // ROS_WARN_STREAM("calc_dynamic_window");
     double Vs[] = {min_vel_, max_vel_, min_yawrate_, max_yawrate_};
 
     double Vd[] = {roomba_.vel - max_accel_*dt_,
@@ -292,3 +307,4 @@ void DWAPlanner::visualize_trajectory(const std::vector<State>& trajectory, cons
 
     local_path_pub.publish(local_path);
 }
+

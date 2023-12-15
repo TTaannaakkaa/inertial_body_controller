@@ -10,6 +10,8 @@
 #include <nav_msgs/Path.h>
 #include <tf2_ros/transform_listener.h>
 #include <tf2/utils.h>
+#include "/home/amsl/catkin_ws/devel/.private/roomba_500driver_meiji/include/roomba_500driver_meiji/RoombaCtrl.h"
+
 
 struct State
 {
@@ -79,32 +81,37 @@ class DWAPlanner
         ros::NodeHandle nh_;
         ros::NodeHandle private_nh_;
 
-        State robot_;
+        State roomba_;
         Dynamic_Window dw_;
 
         ros::Subscriber local_goal_sub_;
         ros::Subscriber obs_pose_sub_;
 
-        ros::Publisher cur_cmd_vel_pub_;
-        ros::Publisher pre_cmd_vel_pub_;
-        ros::Publisher cur_predict_path_pub_;
-        ros::Publisher cur_optimal_path_pub_;
-        ros::Publisher pre_predict_path_pub_;
-        ros::Publisher pre_optimal_path_pub_;
+        // ros::Publisher cmd_vel_pub_;
+        // ros::Publisher pre_cmd_vel_pub_;
+        // ros::Publisher predict_path_pub_;
+        // ros::Publisher optimal_path_pub_;
+        // ros::Publisher pre_predict_path_pub_;
+        // ros::Publisher pre_optimal_path_pub_;
 
-
-
+        ros::Publisher cmd_speed_pub_;
+        ros::Publisher predict_path_pub_;
+        ros::Publisher optimal_path_pub_;
 
         geometry_msgs::PointStamped local_goal_;
         geometry_msgs::PoseArray obs_pose_;
-        geometry_msgs::Twist cur_cmd_vel_;
-        geometry_msgs::Twist pre_cmd_vel_;
-        nav_msgs::Path cur_predict_path_;
-        nav_msgs::Path cur_optimal_path_;
-        nav_msgs::Path pre_predict_path_;
-        nav_msgs::Path pre_optimal_path_;
+        // geometry_msgs::Twist cmd_vel_;
+        // geometry_msgs::Twist pre_cmd_vel_;
+        // nav_msgs::Path predict_path_;
+        // nav_msgs::Path optimal_path_;
+        // nav_msgs::Path pre_predict_path_;
+        // nav_msgs::Path pre_optimal_path_;
 
         tf2_ros::Buffer tfBuffer_;
+
+
+        roomba_500driver_meiji::RoombaCtrl roomba_ctl_msg_;
+
 };
 
 #endif // PREDICT_VEL_PLANNER_H

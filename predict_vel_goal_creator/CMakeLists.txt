@@ -13,7 +13,6 @@ sensor_msgs
 geometry_msgs
 tf
 tf2
-# roomba_500driver_meiji
 )
 
 ###################################
