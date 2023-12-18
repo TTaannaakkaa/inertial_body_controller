@@ -5,5 +5,6 @@
 
     <node pkg="predict_vel_goal_creator" type="predict_vel_goal_creator_node" name="predict_vel_goal_creator" output="screen">
         <rosparam command="load" file="$(arg predict_vel_goal_creator_settings)"/>
+        <remap from="/estimated_pose" to="/pose"/>
     </node>
 </launch>
