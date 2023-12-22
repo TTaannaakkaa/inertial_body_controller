@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="setting_file" default="$(find body_rotational_controller)/config/param/body_rotational_controller.yaml"/>
+    <node name="body_rotational_controller" pkg="body_rotational_controller" type="body_rotational_controller_node" output="screen">
+        <rosparam command="load" file="$(arg setting_file)"/>
+    </node>
+</launch>

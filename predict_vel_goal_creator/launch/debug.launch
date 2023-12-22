@@ -8,7 +8,7 @@
     <include file="$(arg second_challenge_path)/global_path_planner/launch/global_path_planner.launch"/>
     <include file="$(arg second_challenge_path)/localizer/launch/localizer.launch"/>
 
-    <node pkg="predict_vel_goal_creator" type="predict_vel_goal_creator_node" name="predict_vel_goal_creator" output="screen">
+    <node pkg="predict_vel_goal_creator" type="predict_vel_goal_creator_ndoe" name="predict_vel_goal_creator" output="screen">
         <rosparam command="load" file="$(arg predict_vel_goal_creator_settings)"/>
     </node>
     

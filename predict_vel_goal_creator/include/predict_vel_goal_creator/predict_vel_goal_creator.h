@@ -36,8 +36,8 @@ private:
     ros::Publisher pre_local_goal_pub_;
 
     nav_msgs::Path path_;
-    geometry_msgs::PointStamped cur_goal_;
-    geometry_msgs::PointStamped pre_goal_;
+    geometry_msgs::PoseStamped cur_goal_;
+    geometry_msgs::PoseStamped pre_goal_;
     geometry_msgs::PoseStamped pose_;
 };
 
