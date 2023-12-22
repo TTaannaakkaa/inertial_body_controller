@@ -11,11 +11,13 @@ PredictVelPlanner::PredictVelPlanner() : private_nh_("~")
 
     cur_goal_.header.frame_id = "map";
     pre_goal_.header.frame_id = "map";
+    cur_goal_.pose.orientation.w = 1.0;
+    pre_goal_.pose.orientation.w = 1.0;
 
     path_sub_ = nh_.subscribe("/global_path", 1, &PredictVelPlanner::pathCallback, this);
     pose_sub_ = nh_.subscribe("/estimated_pose", 1, &PredictVelPlanner::poseCallback, this);
-    cur_local_goal_pub_ = nh_.advertise<geometry_msgs::PointStamped>("/cur_local_goal", 1);
-    pre_local_goal_pub_ = nh_.advertise<geometry_msgs::PointStamped>("/pre_local_goal", 1);
+    cur_local_goal_pub_ = nh_.advertise<geometry_msgs::PoseStamped>("/cur_local_goal", 1);
+    pre_local_goal_pub_ = nh_.advertise<geometry_msgs::PoseStamped>("/pre_local_goal", 1);
 }
 
 void PredictVelPlanner::poseCallback(const geometry_msgs::PoseStamped::ConstPtr& msg)
@@ -56,8 +58,8 @@ void PredictVelPlanner::publishCurGoal()
             cur_goal_index_ = path_.poses.size() - 1;
         }
     }
-    cur_goal_.point.x = path_.poses[cur_goal_index_].pose.position.x;
-    cur_goal_.point.y = path_.poses[cur_goal_index_].pose.position.y;
+    cur_goal_.pose.position.x = path_.poses[cur_goal_index_].pose.position.x;
+    cur_goal_.pose.position.y = path_.poses[cur_goal_index_].pose.position.y;
     cur_goal_.header.stamp = ros::Time::now();
     cur_local_goal_pub_.publish(cur_goal_);
 }
@@ -80,8 +82,8 @@ void PredictVelPlanner::publishPreGoal()
             pre_goal_index_ = path_.poses.size() - 1;
         }
     }
-    pre_goal_.point.x = path_.poses[pre_goal_index_].pose.position.x;
-    pre_goal_.point.y = path_.poses[pre_goal_index_].pose.position.y;
+    pre_goal_.pose.position.x = path_.poses[pre_goal_index_].pose.position.x;
+    pre_goal_.pose.position.y = path_.poses[pre_goal_index_].pose.position.y;
     pre_goal_.header.stamp = ros::Time::now();
     pre_local_goal_pub_.publish(pre_goal_);
 }
