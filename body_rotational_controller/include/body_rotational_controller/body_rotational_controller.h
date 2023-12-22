@@ -23,6 +23,7 @@ private:
 
     void odom_callback(const nav_msgs::Odometry::ConstPtr& msg);
     void model_states_callback(const gazebo_msgs::ModelStates::ConstPtr& msg);
+    void cmd_vel_callback(const geometry_msgs::Twist::ConstPtr& msg);
     void calc_attitude(double vel, double yaw_rate, double accell);
     void set_attitude(double roll, double pitch);
 
@@ -56,6 +57,7 @@ private:
 
     nav_msgs::Odometry odom_;
     gazebo_msgs::ModelStates model_states_;
+    geometry_msgs::Twist cmd_vel_;
     sq2_ccv_roll_pitch_msgs::RollPitch roll_pitch_;
 };
 
