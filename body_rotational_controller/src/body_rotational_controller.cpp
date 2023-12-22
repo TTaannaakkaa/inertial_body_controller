@@ -12,7 +12,8 @@ BodyRotationalController::BodyRotationalController(void) : local_nh_("~")
 
     roll_pitch_pub_ = nh_.advertise<sq2_ccv_roll_pitch_msgs::RollPitch>("/roll_pitch", 1);
     // odom_sub_ = nh_.subscribe("/odom", 1, &BodyRotationalController::odom_callback, this);
-    model_states_sub_ = nh_.subscribe("/gazebo/model_states", 1, &BodyRotationalController::model_states_callback, this);
+    // model_states_sub_ = nh_.subscribe("/gazebo/model_states", 1, &BodyRotationalController::model_states_callback, this);
+    cmd_vel_sub_ = nh_.subscribe("/cmd_vel", 1, &BodyRotationalController::cmd_vel_callback, this);
 
 }
 
@@ -25,12 +26,21 @@ BodyRotationalController::BodyRotationalController(void) : local_nh_("~")
 //     // ROS_ERROR_STREAM("V: " << V_ << ", W: " << W_);
 // }
 
-void BodyRotationalController::model_states_callback(const gazebo_msgs::ModelStates::ConstPtr& msg)
+// void BodyRotationalController::model_states_callback(const gazebo_msgs::ModelStates::ConstPtr& msg)
+// {
+//     model_states_ = *msg;
+//     BEFORE_V_ = CURRENT_V_;
+//     CURRENT_V_ = model_states_.twist[1].linear.x;
+//     W_ = model_states_.twist[1].angular.z;
+//     // ROS_ERROR_STREAM("V: " << CURRENT_V_ << ", W: " << W_);
+// }
+
+void BodyRotationalController::cmd_vel_callback(const geometry_msgs::Twist::ConstPtr& msg)
 {
-    model_states_ = *msg;
+    cmd_vel_ = *msg;
     BEFORE_V_ = CURRENT_V_;
-    CURRENT_V_ = model_states_.twist[1].linear.x;
-    W_ = model_states_.twist[1].angular.z;
+    CURRENT_V_ = cmd_vel_.linear.x;
+    W_ = cmd_vel_.angular.z;
     // ROS_ERROR_STREAM("V: " << CURRENT_V_ << ", W: " << W_);
 }
 
@@ -83,7 +93,7 @@ void BodyRotationalController::process(void)
         PITCH_ = BodyRotationalController::calc_pitch(accell);
         ROLL_ = BodyRotationalController::calc_roll(v, W_);
         ROS_INFO_STREAM("PITCH: " << PITCH_ << ", ACCELL: " << accell);
-        ROS_WARN_STREAM("ROLL: " << ROLL_ << ", V: " << v << ", W: " << W_);
+        // ROS_WARN_STREAM("ROLL: " << ROLL_ << ", V: " << v << ", W: " << W_);
         roll_pitch_.roll = ROLL_;
         roll_pitch_.pitch = PITCH_;
         roll_pitch_pub_.publish(roll_pitch_);
