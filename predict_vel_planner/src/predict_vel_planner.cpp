@@ -218,7 +218,7 @@ double DWAPlanner::calc_eval(const std::vector<State>& trajectory)
     double velocity = calc_velocity_eval(trajectory);
     double distance = calc_distance_eval(trajectory);
 
-    ROS_INFO_STREAM("heading: " << heading << ", velocity: " << velocity << ", distance: " << distance);
+    // ROS_INFO_STREAM("heading: " << heading << ", velocity: " << velocity << ", distance: " << distance);
 
     return heading_cost_gain_ * heading + velocity_cost_gain_ * velocity + distance_cost_gain_ * distance;
 }

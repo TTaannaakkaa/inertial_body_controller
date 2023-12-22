@@ -25,7 +25,7 @@ private:
     void model_states_callback(const gazebo_msgs::ModelStates::ConstPtr& msg);
     void cmd_vel_callback(const geometry_msgs::Twist::ConstPtr& msg);
     void calc_attitude(double vel, double yaw_rate, double accell);
-    void set_attitude(double roll, double pitch);
+    void publish_attitude(double roll, double pitch);
 
     double calc_com_vel(double vel, double yaw_rate, double roll);
     double calc_roll(double vel, double yaw_rate);

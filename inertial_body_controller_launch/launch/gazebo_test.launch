@@ -11,7 +11,7 @@
     <include file="$(find predict_vel_goal_creator)/launch/predict_vel_goal_creator.launch"/>
     <include file="$(find predict_vel_planner)/launch/predict_vel_planner.launch"/>
     <!-- <include file="$(arg work_space)/predict_velocity_planner/launch/local_planner.launch"/> -->
-    <!-- <include file="$(find body_controller)/launch/body_controller.launch"/> -->
+    <include file="$(find body_rotational_controller)/launch/body_rotational_controller.launch"/>
 
     <node pkg="rviz" type="rviz" name="rviz" args="-d $(arg rviz_settings)"/>
 </launch>

@@ -83,6 +83,14 @@ double BodyRotationalController::calc_roll(double v, double w)
     return theta;
 }
 
+void BodyRotationalController::publish_attitude(double roll, double pitch)
+{
+    ros::Time now = ros::Time::now();
+    roll_pitch_.roll = roll;
+    roll_pitch_.pitch = pitch;
+    roll_pitch_pub_.publish(roll_pitch_);
+}
+
 void BodyRotationalController::process(void)
 {
     ros::Rate loop_rate(HZ_);
@@ -93,10 +101,8 @@ void BodyRotationalController::process(void)
         PITCH_ = BodyRotationalController::calc_pitch(accell);
         ROLL_ = BodyRotationalController::calc_roll(v, W_);
         ROS_INFO_STREAM("PITCH: " << PITCH_ << ", ACCELL: " << accell);
-        // ROS_WARN_STREAM("ROLL: " << ROLL_ << ", V: " << v << ", W: " << W_);
-        roll_pitch_.roll = ROLL_;
-        roll_pitch_.pitch = PITCH_;
-        roll_pitch_pub_.publish(roll_pitch_);
+        ROS_WARN_STREAM("ROLL: " << ROLL_ << ", V: " << v << ", W: " << W_);
+        BodyRotationalController::publish_attitude(ROLL_, PITCH_);
         ros::spinOnce();
         loop_rate.sleep();
     }
