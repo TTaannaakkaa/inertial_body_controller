@@ -37,7 +37,7 @@ class DWAPlanner
         void process();
 
     private:
-        void local_goal_callback(const geometry_msgs::PointStamped::ConstPtr& msg);
+        void local_goal_callback(const geometry_msgs::PoseStamped::ConstPtr& msg);
         void obs_pose_callback(const geometry_msgs::PoseArray::ConstPtr& msg);
 
         void roomba_ctl(double vel, double yawrate);
@@ -98,7 +98,7 @@ class DWAPlanner
         ros::Publisher predict_path_pub_;
         ros::Publisher optimal_path_pub_;
 
-        geometry_msgs::PointStamped local_goal_;
+        geometry_msgs::PoseStamped local_goal_;
         geometry_msgs::PoseArray obs_pose_;
         geometry_msgs::Twist cmd_vel_;
         // geometry_msgs::Twist pre_cmd_vel_;

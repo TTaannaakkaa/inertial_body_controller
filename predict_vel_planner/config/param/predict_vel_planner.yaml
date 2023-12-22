@@ -15,9 +15,9 @@ max_dyawrate: 1000.0
 v_reso: 0.05
 y_reso: 0.1
 
-heading_cost_gain: 1.5
-velocity_cost_gain: 0.5
-distance_cost_gain: 0.0
+heading_cost_gain: 1.0
+velocity_cost_gain: 1.0
+distance_cost_gain: 1.0
 
 robot_radius: 0.25
 radius_margin: 0.1

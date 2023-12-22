@@ -31,7 +31,7 @@ DWAPlanner::DWAPlanner():private_nh_("~")
     optimal_path_pub_ = nh_.advertise<nav_msgs::Path>("/optimal_path", 1);
 }
 
-void DWAPlanner::local_goal_callback(const geometry_msgs::PointStamped::ConstPtr& msg)
+void DWAPlanner::local_goal_callback(const geometry_msgs::PoseStamped::ConstPtr& msg)
 {
     geometry_msgs::TransformStamped transformStamped;
     try
@@ -60,8 +60,8 @@ bool DWAPlanner::is_goal_reached()
     //     return false;
     // }
 
-    double dx = local_goal_.point.x;
-    double dy = local_goal_.point.y;
+    double dx = local_goal_.pose.position.x;
+    double dy = local_goal_.pose.position.y;
     double dist = hypot(dx, dy);
 
     if(dist > goal_tolerance_)
@@ -225,8 +225,8 @@ double DWAPlanner::calc_eval(const std::vector<State>& trajectory)
 
 double DWAPlanner::calc_heading_eval(const std::vector<State>& trajectory)
 {
-    double dx = local_goal_.point.x - trajectory.back().x;
-    double dy = local_goal_.point.y - trajectory.back().y;
+    double dx = local_goal_.pose.position.x - trajectory.back().x;
+    double dy = local_goal_.pose.position.y - trajectory.back().y;
     double goal_yaw = atan2(dy, dx);
     double yaw = trajectory.back().yaw;
     double heading = 0.0;
@@ -273,7 +273,7 @@ double DWAPlanner::calc_distance_eval(const std::vector<State>& trajectory)
         }
     }
 
-    return (search_range_ - min_dist) / search_range_;
+    return 1.0;
 }
 
 void DWAPlanner::visualize_trajectory(const std::vector<State>& trajectory, const ros::Publisher& local_path_pub, const ros::Time now)
