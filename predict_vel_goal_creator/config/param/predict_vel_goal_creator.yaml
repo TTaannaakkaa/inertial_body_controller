@@ -1,4 +1,4 @@
-hz: 10
+hz: 100
 index_step: 5
 cur_goal_index: 50
 pre_goal_index: 55
