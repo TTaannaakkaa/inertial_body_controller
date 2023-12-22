@@ -7,11 +7,10 @@
     <!-- <inckude file="$(arg work_space)/sq2_ccv_description/launch/gazebo.launch"/> -->
     <include file="$(arg work_space)/robot_state_to_pose/launch/robot_state_to_pose.launch"/>
     <include file="$(arg work_space)/planner/sin/launch/sin.launch"/>
-    <!-- <include file="$(arg work_space)/second_challenge_second/obstacle_detector/launch/obstacle_detector.launch"/> -->
-    <include file="$(find predict_vel_goal_creator)/launch/predict_vel_goal_creator.launch"/>
-    <include file="$(find predict_vel_planner)/launch/predict_vel_planner.launch"/>
-    <!-- <include file="$(arg work_space)/predict_velocity_planner/launch/local_planner.launch"/> -->
-    <include file="$(find body_rotational_controller)/launch/body_rotational_controller.launch"/>
+    <!-- <include file="$(arg work_space)/second_challenge_new/obstacle_detector/launch/obstacle_detector_gazebo.launch"/> -->
+    <include file="$(find predict_vel_goal_creator)/launch/predict_vel_goal_creator_gazebo.launch"/>
+    <include file="$(find predict_vel_planner)/launch/predict_vel_planner_gazebo.launch"/>
+    <include file="$(find body_rotational_controller)/launch/body_rotational_controller_gazebo.launch"/>
 
     <node pkg="rviz" type="rviz" name="rviz" args="-d $(arg rviz_settings)"/>
 </launch>
