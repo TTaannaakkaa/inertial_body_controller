@@ -21,8 +21,6 @@ DWAPlanner::DWAPlanner():private_nh_("~")
     private_nh_.getParam("radius_margin", radius_margin_);
     private_nh_.getParam("search_range", search_range_);
 
-
-
     local_goal_sub_ = nh_.subscribe("/cur_local_goal", 1, &DWAPlanner::local_goal_callback, this);
     // obs_pose_sub_ = nh_.subscribe("/obstacle_pose", 1, &DWAPlanner::obs_pose_callback, this);
 
@@ -218,7 +216,7 @@ double DWAPlanner::calc_eval(const std::vector<State>& trajectory)
     double velocity = calc_velocity_eval(trajectory);
     double distance = calc_distance_eval(trajectory);
 
-    // ROS_INFO_STREAM("heading: " << heading << ", velocity: " << velocity << ", distance: " << distance);
+    ROS_INFO_STREAM("heading: " << heading << ", velocity: " << velocity << ", distance: " << distance);
 
     return heading_cost_gain_ * heading + velocity_cost_gain_ * velocity + distance_cost_gain_ * distance;
 }
